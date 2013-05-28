@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>我的课表</title>
+        <link rel="stylesheet" href="css/jquery.mobile-1.1.0.min.css" />
+        <link rel="stylesheet" href="css/style.css" />
+		<script src="js/cordova-1.7.0rc1.js"></script>
+        <script src="js/jquery-1.7.2.min.js"></script>
+        <script src="js/jquery.mobile-1.1.0.min.js"></script>
+		<script src="js/db.js"></script>
+    </head>
+    <body>
+        <div data-role="page" id="main">
+			<div data-role="header" class="ui-header ui-bar-a" data-position="fixed"> 
+				<h1>我的课表</h1> 
+				<a href="index.html"  class="ui-btn-left" rel=external>切换帐号</a>
+				<a class="ui-btn-right" id="update-lesson-table-btn">更新课表</a>
+			</div>
+			<div data-role="content" id="content">
+			<table class="lesson-table ui-bar-e" border="1px" cellspacing="0px" style="border-collapse:collapse"></table>
+			<div class="display-none"></div>
+			</div>
+			<div data-role="footer" data-position="fixed"  class="nav-glyphish" id="footer">
+				<div data-role="navbar"  class="nav-glyphish" data-grid="d">
+				<ul>
+					<li><a id="table" class="ui-btn-active" data-icon="custom">课表</a></li>
+					<li><a href="score.html" id="score" data-icon="custom" rel=external>成绩</a></li>
+					<li><a href="classroom.html" id="classroom" data-icon="custom" rel=external>教室</a></li>
+					<li><a href="choose.html" id="choose" data-icon="custom" rel=external>选课</a></li>
+					<li><a href="evaluate.html" id="evaluate" data-icon="custom" rel=external>评教</a></li>
+				</ul>
+				</div>
+			</div>
+        </div>
+	<script>
+	$(document).ready(function(){
+		if (localStorage.getItem('lesson_table') == null) {
+			localStorage.setItem('lesson_table','');
+			$('#update-lesson-table-btn').click();
+		}else{
+			if(localStorage.getItem('lesson_table')==''){
+				$('#update-lesson-table-btn').click();
+			}else{
+				$('.lesson-table').html(localStorage.getItem('lesson_table'));
+			}
+		}
+		$('#update-lesson-table-btn').click(function(){
+		$.mobile.showPageLoadingMsg();
+		$('.lesson-table').html('');
+		update_lesson_table();
+	});
+	}, false);
+	
+	function update_lesson_table(){
+	$.ajax({
+		url:'./myclass.html',
+		type:'GET',
+		success:function(e){
+			$.mobile.hidePageLoadingMsg();
+			$('.display-none').html(e.split('页面查看成绩')[1].replace('</td>','').replace('</tr>','').split('<TR class="TR_TITLE">')[0]);
+			make_lesson_table();
+			localStorage.setItem('lesson_table',$('.lesson-table').html());
+		}
+	});
+	}
+	function make_lesson_table() {
+		var a = getlesson();
+		var lt = new Array;
+		for(var i=1;i<=14;i++){
+			lt[i]=i;
+		}
+		$('.lesson-table').append('<tr class="tr_title"><td></td></tr>');
+		for (var i = 1; i <= 7; i++) {
+			$('.tr_title').append('<td width="100"><center>周' + n2c(i) + '</center></td>');
+		}
+		for (var i = 1; i <= 14; i++) 
+		{
+			$('.lesson-table').append('<tr class="tr_body"><td id="l_' + i + '" width="80"><center>' + lt[i] + '</center></td></tr>');
+			for (var j = 1; j <= 7; j++) {
+				$('#l_' + i).parent().append('<td><center>' + a[j][i] + '</center></td>');
+			}
+		}
+		for (var i = 2; i <= 8; i++) {
+			_w_table_rowspan('.lesson-table', i);
+		}
+	}
+	function _w_table_rowspan(_w_table_id, _w_table_colnum) 
+	{
+		_w_table_firsttd = "";
+		_w_table_currenttd = "";
+		_w_table_SpanNum = 0;
+		_w_table_Obj = $(_w_table_id + " tr td:nth-child(" + _w_table_colnum + ")");
+		_w_table_Obj.each(function (i) 
+		{
+			if ($(this).text() != '') 
+			{
+				if (i == 0) {
+					_w_table_firsttd = $(this);
+					_w_table_SpanNum = 1;
+				}
+				else 
+				{
+					_w_table_currenttd = $(this);
+					if (_w_table_firsttd.text() == _w_table_currenttd.text()) 
+					{
+						_w_table_SpanNum++;
+						_w_table_currenttd.hide();
+						_w_table_firsttd.attr("rowSpan", _w_table_SpanNum);
+					}
+					else {
+						_w_table_firsttd = $(this);
+						_w_table_SpanNum = 1;
+					}
+				}
+			}
+		});
+	}
+	function n2c(s) 
+	{
+		var chinese = ['', '一', '二', '三', '四', '五', '六', '日'];
+		　　 s = "" + s;
+		　　 slen = s.length;
+		　　 var result = "";
+		　　 for (var i = 0; i < slen; i++) 　　 {
+			　　 result += chinese[s.charAt(i)];
+		}
+		　　 return result;
+	}
+	function getlesson() 
+	{
+		var lessondetail, lessonname, start, end, length, i, j, k, m, n;
+		var a = new Array();
+		for (m = 0; m <= 7; m++) {
+			a[m] = new Array();
+			for (n = 0; n <= 14; n++) {
+				a[m][n] = '';
+			}
+		}
+		for (i = 1; i <= $('.display-none .TR_BODY').length; i++) 
+		{
+			lessonname = $('.display-none .TR_BODY td').eq(23 * i - 20).text();
+			teachername = $('.display-none .TR_BODY td').eq(23 * i - 15).text();
+			for (j = 1; j <= 7; j++) 
+			{
+				lessondetail = $('.display-none .TR_BODY td').eq(23 * i - 11 + j).text();
+				if (lessondetail.indexOf('周') != - 1) 
+				{
+					start = Number(lessondetail.split(';')[1].split('-')[0]);
+					end = Number(lessondetail.split(';')[1].split('-')[1].split(',')[0].split('节')[0]);
+					for (k = start; k <= end; k++) 
+					{
+						a[j][k] = lessonname + '<br>' + lessondetail.replace(start + '-' + end + '节,', '').split(';')[0].replace(/周,每/g,'/').replace(/周/g,'') + '<br>' + lessondetail.replace(start + '-' + end + '节,', 
+						'').split(';')[1].replace(/,/g,'<br>');
+					}
+				}
+			}
+		}
+		return a;
+	}
+	</script>
+    </body>
+</html>
+<tbody>
+

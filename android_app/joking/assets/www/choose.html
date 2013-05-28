@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>快捷选课</title>
+        <link rel="stylesheet" href="css/jquery.mobile-1.1.0.min.css" />
+        <link rel="stylesheet" href="css/style.css" />
+		<script src="js/cordova-1.7.0rc1.js"></script>
+        <script src="js/jquery-1.7.2.min.js"></script>
+        <script src="js/jquery.mobile-1.1.0.min.js"></script>
+		<script src="js/html5sql.js"></script>
+		<script src="js/db.js"></script>
+    </head>
+    <body>
+		<div data-role="page" id="main">
+			<div data-role="header" class="ui-header ui-bar-a" data-position="fixed"> 
+				<h1>选课</h1> 
+				<a href="index.html"  class="ui-btn-left" rel=external>切换帐号</a>
+				<a class="ui-btn-right" id="update-lesson-btn">更新课程数据</a>
+			</div>
+			<div data-role="content">
+				<ul data-role="listview">
+					<li>
+						<a href="#search-form">
+							<h3>课程查询</h3>
+							<p>在这里筛选课程并提交到选课单。</p>
+						</a>
+					</li>
+					<li>
+						<a href="choose.html#choose-form" rel=external>
+							<h3>选课单</h3>
+							<p>在这里提交你已选的课程。</p>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div data-role="footer" data-position="fixed"  class="nav-glyphish" id="footer">
+				<div data-role="navbar"  class="nav-glyphish" data-grid="d">
+				<ul>
+					<li><a href="table.html" id="table" data-icon="custom" rel=external>课表</a></li>
+					<li><a href="score.html" id="score" data-icon="custom" rel=external>成绩</a></li>
+					<li><a href="classroom.html" id="classroom" data-icon="custom" rel=external>教室</a></li>
+					<li><a class="ui-btn-active" id="choose" data-icon="custom">选课</a></li>
+					<li><a href="evaluate.html" id="evaluate" data-icon="custom" rel=external>评教</a></li>
+				</ul>
+				</div>
+			</div>
+		</div>
+		<div data-role="page" id="choose-form">
+			<div data-role="header" class="ui-header ui-bar-a" data-position="fixed"> 
+				<h1>选课单</h1> 
+				<a href="choose.html" data-icon="back" data-direction="reverse">返回主界面</a>
+				<a id="reset-choose-list">重置选课单</a>
+			</div>
+			<div data-role="content" id="choose-list-table">
+					<ul data-role="listview" data-inset="true" data-split-theme="d"   data-divider-theme="b" data-split-icon="delete">
+						<li data-role="list-divider" class="type1_list">通识选修课选课单(<=6)</li>
+						<li data-theme="c">
+							<button data-theme="b" data-inline="true" class="type1_submit">提交</button>
+						</li>
+					</ul>
+					<ul data-role="listview" data-inset="true" data-split-theme="d"   data-divider-theme="b" data-split-icon="delete">
+						<li data-role="list-divider" class="type2_list">专业课选课单</li>
+						<li data-theme="c">
+							<button data-theme="b" data-inline="true" class="type2_submit">提交</button>
+						</li>
+					</ul>
+					<ul data-role="listview" data-inset="true" data-split-theme="d"   data-divider-theme="b" data-split-icon="delete">
+						<li data-role="list-divider" class="type3_list">通识必修课选课单</li>
+						<li data-theme="c">
+							<button data-theme="b" data-inline="true" class="type3_submit">提交</button>
+						</li>
+					</ul>
+			</div>
+		</div>
+        <div data-role="page" id="search-form">
+			<div data-role="header" class="ui-header ui-bar-a" data-position="fixed"> 
+				<h1>课程查询</h1> 
+				<a href="choose.html" data-icon="back" data-direction="reverse">返回主界面</a>
+				<a href="#choose-form" data-direction="reverse">选课单</a>
+			</div>
+			<div data-role="content" id="content">
+				<div class="support">
+					<div data-role="fieldcontain">
+						<label for="name_s">课程名</label>
+						<input type="text" id="name_s">
+					</div>
+					<div data-role="fieldcontain">
+						<label for="id_s">课头号</label>
+						<input type="text" id="id_s">
+					</div>
+					<div data-role="fieldcontain">
+						<label for="teacher_s">老师</label>
+						<input type="text" id="teacher_s">
+					</div>
+					<div data-role="fieldcontain">
+						<label for="score_condition_s">学分(可输>,<,=,>=,<=)</label>
+						<input type="text" id="score_condition_s" value="=">
+						<label for="score_s"></label>
+						<input type="text" id="score_s" value="全部">
+					</div>
+					<div data-role="fieldcontain">
+						<label for="type_s">课程类型</label>
+						<select id="type_s">
+							<option value="" >全部</option>
+							<option value="公共选修" selected>公共选修</option>
+							<option value="公共必修" >公共必修</option>
+							<option value="专业选修">专业选修</option>
+							<option value="专业必修">专业必修</option>
+						</select>
+					</div>
+					<div data-role="fieldcontain">
+						<label for="academy_s">院系</label>
+						<select id="academy_s">
+							<option value="" selected>全部</option>
+						</select>
+					</div>
+					<div data-role="fieldcontain">
+						<label for="year_s">年份</label>
+						<select id="year_s">
+							<option value="" selected>全部</option>
+							<option value="2011">2011-2012</option>
+						</select>
+					</div>
+					<div data-role="fieldcontain">
+						<label for="term_s">学期</label>
+						<select id="term_s">
+							<option value="" selected>全部</option>
+							<option value="1">上学期</option>
+							<option value="2">下学期</option>
+						</select>
+					</div>
+					<div data-role="fieldcontain">
+						<fieldset data-role="controlgroup">
+							<legend>排序方式</legend>
+							<input  type="radio" value = "score" id="byscore" name="bywhat">
+							<label for="byscore">按学分</label>
+							<input type="radio" id="byid"  value = "id" name="bywhat" checked>
+							<label for="byid">按课头号(年份/学期/院系)</label>
+							<input  type="radio" id="byteacher" value = "teacher" name="bywhat">
+							<label for="byteacher">按老师</label>
+							<input  type="radio" id="bytype" value = "type" name="bywhat">
+							<label for="bytype">按类型</label>
+						</fieldset>
+					</div>
+					<div data-role="fieldcontain">
+						<fieldset data-role="controlgroup">
+							<legend></legend>
+							<input type="radio" id="byasc" value = "asc" name="dora" checked>
+							<label for="byasc">升序</label>
+							<input type="radio" id="bydesc" value = "desc" name="dora">
+							<label for="bydesc">降序</label>
+						</fieldset>
+					</div>
+					<button id="search-lesson-btn" data-theme="b" data-icon="search">查找</button>
+				</div>
+			</div>
+        </div>
+		 <div data-role="page" id="result">
+			<div data-role="header" class="ui-header ui-bar-a" data-position="fixed"> 
+				<h1>查询结果</h1> 
+				<a href="#search-form" data-icon="back" data-direction="reverse">返回查询</a>
+				<a href="#choose-form" rel=external>选课单</a>
+			</div>
+			<div data-role="content" id="classroom-result">
+				<ul class="lt-content" data-role="listview" data-inset="true" data-split-theme="d" data-split-icon="plus"></ul>
+			</div>
+		 </div>
+		<script>
+document.addEventListener("deviceready", function(){
+			$.mobile.showPageLoadingMsg();
+			if (localStorage.getItem('choose_list') == null) {
+				localStorage.setItem('choose_list','');
+			}else{
+				if(localStorage.getItem('choose_list')!=''){
+					$('#choose-list-table').html(localStorage.getItem('choose_list'));
+					dom_delete();
+				}
+			}
+			dom();
+			var db = window.openDatabase("freexker", "1.0", "freexk_login", 5000000);
+			db.transaction(function (tx) {
+				tx.executeSql("CREATE TABLE IF NOT EXISTS lesson (id INT UNIQUE, name TEXT,type TEXT,score FLOAT,teacher TEXT)");
+				tx.executeSql("CREATE TABLE IF NOT EXISTS detail (id INT, weekday INT,time TEXT, building TEXT, room TEXT ,primary key(id,weekday,time,building,room))");
+				tx.executeSql('SELECT * FROM lesson', [], function (tx, result) {
+					if (result.rows.length == 0) {
+						$('#update-lesson-btn').click();
+					} else {
+						$.mobile.hidePageLoadingMsg();
+					}
+				}, null);
+			});
+			$('#reset-choose-list').click(function(){
+	localStorage.setItem('choose_list','');
+	location.reload();
+});
+ajax_submit($('.type1_submit'),'pub');
+ajax_submit($('.type2_submit'),'plan');
+ajax_submit($('.type3_submit'),'pub_required');
+
+$('#search-lesson-btn').click(function () 
+    {
+        db.transaction(function (tx) 
+        {
+            tx.executeSql('SELECT * FROM lesson', [], function (tx, result) 
+            {
+                if (result.rows.length == 0) {
+                    $('#update-lesson-btn').click();
+                }
+            }, null);
+        });
+        $('.lt-content').html('');
+		$.mobile.changePage("#result");
+        var id = $('#id_s').val();
+        var name = $('#name_s').val();
+        var teacher = $('#teacher_s').val();
+        var score = $('#score_s').val();
+        var score_condition = $('#score_condition_s').val();
+        var type = $('#type_s').val();
+        var year = $('#year_s option:selected').val();
+        var term = $('#term_s option:selected').val();
+        var academy = $('#academy_s option:selected').val();
+        var bywhat = $('input:[name="bywhat"]:radio:checked').val();
+        var dora = $('input:[name="dora"]:radio:checked').val();
+        if (score != '全部') 
+        {
+            sqlstr = 'SELECT * FROM lesson WHERE id like "%' + id + '%" AND  name like "%' + name + '%" AND type like "%' + type + '%" AND score ' + score_condition + score + '  AND teacher like "%' + teacher + '%" AND id like "' + year + '%' + term + '%' + ((academy == '') ? '' : pad(academy, 
+            3)) + '___" order by ' + bywhat + ' ' + dora;
+        }
+        else 
+        {
+            sqlstr = 'SELECT * FROM lesson WHERE id like "%' + id + '%" AND  name like "%' + name + '%" AND type like "%' + type + '%" AND teacher like "%' + teacher + '%" AND id like "' + year + '%' + term + '%' + ((academy == '') ? '' : pad(academy, 
+            3)) + '___" order by ' + bywhat + ' ' + dora;
+        }
+        var aca = getaca();
+        db.transaction(function (tx) 
+        {
+            tx.executeSql(sqlstr, [], function (tx, result) 
+            {
+                for (var i = 0; i < result.rows.length; i++) 
+                {
+                    $('.lt-content').append('<li><a><h3>' + result.rows.item(i)['name'] + '</h3><p>' + aca[Number(result.rows.item(i)['id'].toString().substring(6, 
+                    8))] +',<w>'+ result.rows.item(i)['id'] +'</w></p><p>'+result.rows.item(i)['type'] +','+ result.rows.item(i)['score'] +'学分,'+ result.rows.item(i)['teacher']+'</p></a><a flag="choose_'+result.rows.item(i)['type']+'">加入选课单</a>');
+                }
+				$('.lt-content').listview('refresh');
+				$('a[flag^="choose_"]').each(function(){
+					$(this).click(function(){
+						if($(this).attr('flag').split('_')[1]=='公共选修'){
+							$('.type1_list').after('<li><a>'+$(this).parent().find('.ui-link-inherit').html()+'</a><a class="delete">删除</a></li>');
+							$('.type1_list').parent().listview();
+							$('.type1_list').parent().listview('refresh');
+						}else if($(this).attr('flag').split('_')[1].indexOf('专业')!=-1){
+							$('.type2_list').after('<li><a>'+$(this).parent().find('.ui-link-inherit').html()+'</a><a class="delete">删除</a></li>');
+							$('.type2_list').parent().listview();
+							$('.type2_list').parent().listview('refresh');
+						}else if($(this).attr('flag').split('_')[1]=='公共必修'){
+							$('.type3_list').after('<li><a>'+$(this).parent().find('.ui-link-inherit').html()+'</a><a class="delete">删除</a></li>');
+							$('.type3_list').parent().listview();
+							$('.type3_list').parent().listview('refresh');
+						}
+						localStorage.setItem('choose_list',$('#choose-list-table').html());
+						$(this).find('.ui-icon-plus').addClass('ui-icon-check');
+					});
+				});
+            }, null);
+        });
+    });
+			}, false);
+		function ajax_submit(DOM,type){
+DOM.click(function(){
+var apply='';
+$(this).parent().parent().parent().find('w').each(function(){
+	apply='apply='+$(this).html()+'&'+apply;
+});
+	$.ajax({
+		url : 'http://jw.whu.edu.cn/servlet/ProcessApply?applyType='+type+'&studentNum='+localStorage.getItem('userid'),
+		type : "POST", 
+		data : apply, 
+		success:function(e){
+            if (e.indexOf('成功') != - 1) {
+                alert('成功提交了哟。');
+            }else if (e.indexOf('404') != - 1) {
+                alert('登录超时了哟');
+            }else {
+                alert('发生错误,不过我也不知道出了什么错哟');
+            }
+		}
+	});
+	
+});
+}
+		function dom(){
+			var aca = getaca();
+			for (var j = 1; j <= 99; j++) 
+			{
+				if (typeof (aca[j]) != 'undefined') {
+					$('select[id="academy_s"]').append('<option value=' + j + '>' + aca[j] + '</option>');
+				}
+			}
+			radio();
+		}
+		function radio() {
+			$('input[value="teacher"],input[value="type"]').click(function () 
+			{
+				$('input[name="dora"]').attr('disabled', 'true');
+				$('input[type="radio"]').not('input[value="teacher"],input[value="type"]').click(function () 
+				{
+					$('input[name="dora"]').removeAttr('disabled');
+					radio();
+				});
+			});
+		}
+		
+		$('#update-lesson-btn').click(function () {
+			$.mobile.showPageLoadingMsg();
+			update_lesson();
+		});
+		function update_lesson() {
+			html5sql.openDatabase("freexker", "freexk_login", 5000000);
+			$.get('db/lesson.sql', function (sql) {
+				html5sql.process(sql,
+					function () {
+					$.mobile.hidePageLoadingMsg();
+				},
+					function (error) {
+					alert(error);
+					$.mobile.hidePageLoadingMsg();
+				});
+			});
+		}
+		function getaca() 
+{
+    var aca = new Array;
+    aca[2] = "外国语言文学学院";
+    aca[3] = "新闻与传播学院";
+    aca[4] = "信息管理学院";
+    aca[5] = "经济与管理学院";
+    aca[6] = "法学院";
+    aca[10] = "数学与统计学院";
+    aca[11] = "物理科学与技术学院";
+    aca[12] = "化学与分子科学学院";
+    aca[13] = "生命科学学院";
+    aca[14] = "资源与环境科学学院";
+    aca[15] = "材料科学与工程学院";
+    aca[16] = "水利水电学院";
+    aca[17] = "电气工程学院";
+    aca[18] = "动力与机械学院";
+    aca[19] = "城市设计学院";
+    aca[20] = "土木建筑工程学院";
+    aca[21] = "计算机学院";
+    aca[22] = "电子信息学院";
+    aca[23] = "遥感信息工程学院";
+    aca[24] = "测绘学院";
+    aca[25] = "医学院";
+    aca[26] = "口腔医学院";
+    aca[27] = "药学院";
+    aca[28] = "公共卫生学院";
+    aca[29] = "历史学院";
+    aca[30] = "国际软件学院";
+    aca[31] = "文学院";
+    aca[32] = "艺术学系";
+    aca[33] = "哲学学院";
+    aca[34] = "政治与公共管理学院";
+    aca[35] = "印刷与包装系";
+    aca[36] = "校医院";
+    aca[37] = "护理学院";
+    aca[38] = "第一临床学院";
+    aca[39] = "第二临床学院";
+    aca[40] = "体育部";
+    aca[41] = "军事教研室";
+    aca[42] = "马克思主义学院";
+    aca[47] = "计算中心";
+    aca[49] = "公共文学教学";
+    aca[53] = "图书馆";
+    aca[54] = "留学生教育学院";
+    aca[55] = "大学英语部";
+    aca[56] = "公共数学教学";
+    aca[57] = "公共物理教学";
+    aca[58] = "公共政治教学";
+    aca[59] = "公共化学教学";
+    aca[60] = "军官选拔办公室";
+    aca[61] = "社会学系";
+    aca[62] = "中国边界研究院";
+    aca[63] = "国际交流部";
+    aca[70] = "高级研究中心";
+    aca[71] = "EMBA";
+    aca[72] = "MBA";
+    aca[73] = "发展研究院";
+    aca[74] = "WTO学院";
+    aca[75] = "校档案馆";
+    aca[76] = "双学位";
+    aca[77] = "校团委";
+    aca[78] = "职业培训学院";
+    aca[79] = "教育科学学院";
+    aca[80] = "就业指导中心";
+    aca[81] = "七校联办";
+    aca[82] = "继续教育学院";
+    aca[83] = "大学生心理健康中心";
+    aca[84] = "学工部";
+    aca[97] = "研究生院";
+    aca[99] = "其它";
+    return aca;
+}
+
+    
+	function pad(num, n) 
+{
+    return num < Math.pow(10, n - 1) ? new Array(n - ('' + num).length + 1).join('0') + num : num;
+}
+function dom_delete(){
+	$('.delete').each(function(){
+		var obj=$(this).parent();
+		$(this).click(function(){
+			obj.remove();
+			localStorage.setItem('choose_list',$('#choose-list-table').html());
+		});
+	});
+}
+
+		</script>
+    </body>
+</html>

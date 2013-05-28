@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<meta charset="utf-8" />
+    <title>My Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="css/jquery.mobile-1.3.0.css">
+    <script src="js/jquery-1.8.2.js"> </script>
+    <script src="js/jquery.mobile-1.3.0.js"></script>
+    </head>
+    <body>
+        <div data-role="page">
+			<div data-role="header" data-theme="b">
+        <h1>ALEX</h1>
+    </div>
+            <div data-role="content">
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="stu_id">学号</label>
+                        <input id="stu_id" placeholder="" value="" type="text" />
+                    </fieldset>
+                </div>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="stu_pw">密码(身份证后六位)</label>
+                        <input id="stu_pw" placeholder="" value="" type="password" />
+                    </fieldset>
+                </div>
+                <a data-role="button" data-transition="fade" id="login" data-theme="b">登录</a>
+            </div>
+        </div>
+        <script>
+		//document.addEventListener("deviceready", onDeviceReady, false);
+		$(document).ready(onDeviceReady);
+		function onDeviceReady() {
+			alert('test');
+			if(localStorage.getItem('userid')!=null&localStorage.getItem('userpw')!=null){
+				$('#stu_id').val(localStorage.getItem('userid'));
+				$('#stu_pw').val(localStorage.getItem('userpw'));
+			}
+
+			
+			$('#login').click(function(){
+				$.mobile.showPageLoadingMsg();
+				$.ajax({
+					url:'http://my.whu.edu.cn/userPasswordValidate.portal?Login.Token1='+$('#stu_id').val()+'&Login.Token2='+$('#stu_pw').val(),
+					type:'GET',
+					success:function(e){
+						if(e.indexOf('LoginSuccessed')!=-1){
+							$.ajax({
+								url:'http://jw.whu.edu.cn/IDStarLogin',
+								type:'GET',
+								success:function(){
+									$.mobile.hidePageLoadingMsg();
+									localStorage.setItem('userid', $('#stu_id').val());
+									localStorage.setItem('userpw', $('#stu_pw').val());
+									window.location.href='table.html';
+								}
+							});
+						}else{
+							$.mobile.hidePageLoadingMsg();
+							alert('粗大事了！你输错了！');
+						}
+					}
+				});
+			});
+			}
+
+        </script>
+    </body>
+</html>

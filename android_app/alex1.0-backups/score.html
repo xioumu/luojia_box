@@ -1,0 +1,187 @@
+<html>
+<head>
+    <title>My Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="css/jquery.mobile-1.3.0.css">
+    <script src="js/jquery-1.8.2.js"> </script>
+    <script src="js/jquery.mobile-1.3.0.js"></script>
+    <script src="js/myjs.js"></script>
+
+</head>
+<body>
+<div data-role="page" data-theme="c">
+    <div data-role="header" data-theme="c"  data-position="fixed">
+        <a href="index.html"  class="ui-btn-left" rel=external onclick="cleanData()">切换帐号</a>
+        <a href="#"  class="ui-btn-right" id="update-today-class-btn" onclick="clickUpdate()">更新数据</a>
+        <h1>所有成绩</h1>
+    </div>
+
+    <div data-role="content" data-theme="c" >
+        <ul data-role="listview"  data-divider-theme="d"  id="class-list" >
+            
+        </ul>
+    </div>
+
+    <div data-role="footer" data-position="fixed" data-theme="c">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="today.html" data-icon="custom"  rel=external  onclick="showLoading()">今日课表</a></li>
+                <li><a href="schedule.html" data-icon="custom" rel=external  onclick="showLoading()">总课表</a></li>
+                <li><a href="#" data-icon="custom" rel=external class="ui-btn-active">成绩</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    //======================Today JS======================
+    var weekDayChinese;
+    var myDate, day, beginTime, endTime;
+    $(document).ready(onDeviceReady_score);
+    //document.addEventListener("deviceready",onDeviceReady, false);
+    function onDeviceReady_score() {
+        //alert("today");
+        var scoreInfo = getLocationScore();
+        if (scoreInfo == null || scoreInfo == '') {
+            clickUpdate();
+        }
+        else {
+            printScoreInfo(scoreInfo);
+        }
+    }
+    function clickUpdate() {
+        $.mobile.showPageLoadingMsg();
+        login();
+    }
+    function updateScoreInfo() { //post url
+        localStorage.BBX_classN = null;
+        htmlobj = $.ajax({
+            url:'myscore.html',
+            type:'GET',
+            success: function(e){
+                $('#class-list').html('');
+                var scoreInfo;
+                scoreInfo = getScoreInfo(e);
+                printScoreInfo(scoreInfo);
+                saveLocationScore(scoreInfo);
+                $.mobile.hidePageLoadingMsg();
+            }
+        });
+    }
+    function getScoreInfo(htmlStr) {
+        htmlStr = htmlStr.replace(/\&nbsp;/g, "");
+        htmlStr = htmlStr.replace(/\n/g, "");
+        var scoreInfo = new Array();
+        var name = getMyGarExp(htmlStr, "<td>.*?(?=</td>)");
+        var more = getMyGarExp(htmlStr, "<td width=\"40\">.*?(?=</td>)");
+        var n = 0;
+        for (var i = 0; i < name.length; i++) {
+            scoreInfo[i] = new Object();
+            name[i] = name[i].substr(4);
+            var ci = Math.floor(i * 3) + 1;
+            var si = Math.floor(i * 3) + 2;
+            more[ci] = more[ci].substr(15);
+            more[si] = more[si].substr(15);
+            scoreInfo[n].name = name[i];
+            scoreInfo[n].score = more[si];
+            scoreInfo[n].credit = more[ci];
+            n++;
+        }
+        return scoreInfo;
+    }
+    function clrGPA(score) {
+        if (score >= 90 && score <= 100) return 4.0;
+        if (score >= 85) return 3.7;
+        if (score >= 82) return 3.3;
+        if (score >= 78) return 3.0;
+        if (score >= 75) return 2.7;
+        if (score >= 72) return 2.3;
+        if (score >= 68) return 2.0;
+        if (score >= 64) return 1.5;
+        if (score >= 60) return 1.0;
+        else return 0;
+    }
+    function getGPA(scoreInfo) {
+        var sum = 0.0;
+        var creditSum = 0.0;
+        for (var i = 0; i < scoreInfo.length; i++) {
+            sum += 1.0 * clrGPA(scoreInfo[i].score) * scoreInfo[i].credit;
+            creditSum += 1.0 * scoreInfo[i].credit;
+        }
+        return sum / creditSum;
+    }
+    function printScoreInfo(scoreInfo){
+        var gpa = getGPA(scoreInfo);
+        var average = 0.0, sumCredit = 0.0;
+        for (var i = 0; i < scoreInfo.length; i++) {
+            sumCredit += 1.0 * scoreInfo[i].credit;
+            average += 1.0 * scoreInfo[i].score;
+        }
+        average /= scoreInfo.length;
+        gpa = gpa.toFixed(2);
+        average = average.toFixed(2);
+        sumCredit = sumCredit.toFixed(2);
+        var res = "<li data-role=\"list-divider\" role=\"heading\" class=\"ui-li ui-li-divider ui-bar-c\">"
+                    + "共" + scoreInfo.length + "门课" + "     平均分:" + average + "     GPA:"   + gpa + "     所修总学分:" + sumCredit + "     </li>";
+        for (var i = 0; i < scoreInfo.length; i++) {
+            res += printTheScore(scoreInfo[i].name, scoreInfo[i].score);
+        }
+        $('#class-list').html(res);
+    }
+    function printTheScore(name, score) {
+        var res = "";
+        res += "<li data-corners=\"false\" data-shadow=\"false\" data-iconshadow=\"true\" data-wrapperels=\"div\"";
+        res += "data-theme=\"c\" class=\"ui-li ui-li-has-count ui-last-child ui-btn-up-c\">";
+        res += "<div class=\"ui-btn-inner ui-li\"><div class=\"ui-btn-text\">" + name;
+        res += "<span class=\"ui-li-count ui-btn-up-c ui-btn-corner-all\">" + score + "</span></div><div></div></li>";
+        return res;
+    }
+    function saveLocationScore(scoreInfo) {
+        localStorage.BBX_scoreN = scoreInfo.length;
+        for (var i = 0; i < scoreInfo.length; i++) {
+            var str = "BBX_score_" + i + "_";
+            saveInfo(str, "name", scoreInfo[i].name);
+            saveInfo(str, "score", scoreInfo[i].score);
+            saveInfo(str, "credit", scoreInfo[i].credit);
+        }
+    }
+    function getLocationScore() {
+        var n = localStorage.BBX_scoreN;
+        if (n == null || n == "" || n == "null") return null;
+        var scoreInfo = new Array();
+        for (var i = 0 ; i < n; i++) {
+            var str = "BBX_score_" + i + "_";
+            scoreInfo[i] = new Object();
+            scoreInfo[i].name = getInfo(str, "name");
+            scoreInfo[i].score = parseFloat(getInfo(str, "score"));
+            scoreInfo[i].credit = parseFloat(getInfo(str, "credit"));
+        }
+        return scoreInfo;
+    }
+    function login(){
+        $.mobile.showPageLoadingMsg();
+        $.ajax({
+            url:'http://my.whu.edu.cn/userPasswordValidate.portal?Login.Token1=' + localStorage.userid + '&Login.Token2=' + localStorage.userpw,
+            type:'GET',
+            success:function(e){
+                if(e.indexOf('LoginSuccessed')!=-1){
+                    $.ajax({
+                        url:'http://jw.whu.edu.cn/IDStarLogin',
+                        type:'GET',
+                        success:function(){
+                            $.mobile.hidePageLoadingMsg();
+                            updateScoreInfo();
+                        }
+                    });
+                }
+                else{
+                    $.mobile.hidePageLoadingMsg();
+                    alert('密码错误！');
+                }
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

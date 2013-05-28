@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>教室查询</title>
+        <link rel="stylesheet" href="css/jquery.mobile-1.1.0.min.css" />
+        <link rel="stylesheet" href="css/style.css" />
+		<script src="js/cordova-1.7.0rc1.js"></script>
+        <script src="js/jquery-1.7.2.min.js"></script>
+        <script src="js/jquery.mobile-1.1.0.min.js"></script>
+		<script src="js/html5sql.js"></script>
+		<script src="js/db.js"></script>
+    </head>
+    <body>
+        <div data-role="page" id="main">
+			<div data-role="header" class="ui-header ui-bar-a" data-position="fixed"> 
+				<h1>空闲教室查询</h1> 
+				<a href="index.html"  class="ui-btn-left" rel=external>切换帐号</a>
+				<a class="ui-btn-right" id="update-classroom-btn">更新教室数据</a>
+			</div>
+			<div data-role="content" id="content">
+				<div class="support">
+					<div class="searchpanel-building" data-role="fieldcontain">
+						<label class="select" for="chooseroom">教学楼</label>
+						<select id="chooseroom">
+							<option value="">请选择教学楼</option>
+						</select>
+					</div>
+					<div class="searchpanel-time" data-role="fieldcontain">
+						<label class="select" for="chooseweekday">时间</label>
+						<select id="chooseweekday">
+							<option value="">请选择时间</option>
+						</select>
+					</div>
+					<button id="searchroom" data-icon="search" data-theme="b">查询</button>
+				</div>
+			</div>
+			<div data-role="footer" data-position="fixed"  class="nav-glyphish" id="footer">
+				<div data-role="navbar"  class="nav-glyphish" data-grid="d">
+				<ul>
+					<li><a href="table.html" id="table" data-icon="custom" rel=external>课表</a></li>
+					<li><a href="score.html" id="score" data-icon="custom" rel=external>成绩</a></li>
+					<li><a class="ui-btn-active" id="classroom" data-icon="custom">教室</a></li>
+					<li><a href="choose.html" id="choose" data-icon="custom" rel=external>选课</a></li>
+					<li><a href="evaluate.html" id="evaluate" data-icon="custom" rel=external>评教</a></li>
+				</ul>
+				</div>
+			</div>
+        </div>
+		 <div data-role="page" id="result">
+			<div data-role="header" class="ui-header ui-bar-a" data-position="fixed"> 
+				<h1>空闲教室查询</h1> 
+				<a href="classroom.html" data-icon="back" data-direction="reverse">返回</a>
+			</div>
+			<div data-role="content" id="classroom-result">
+				<div class="roomtable"></div>
+			</div>
+		 </div>
+		<script>
+		document.addEventListener("deviceready", function(){
+//$(document).ready(function(){
+			$.mobile.showPageLoadingMsg();
+			for (var k = 1; k <= 7; k++) {
+				$('#chooseweekday').append('<option value="' + k + '">星期' + n2c(k) + '</option>');
+			}
+			try{var db = window.openDatabase("freexker", "1.0", "freexk_login", 5000000);
+			}catch(err){
+			alert(err);
+			}
+			db.transaction(function (tx) {
+				tx.executeSql("CREATE TABLE IF NOT EXISTS lesson (id INT UNIQUE, name TEXT,type TEXT,score FLOAT,teacher TEXT)");
+				tx.executeSql("CREATE TABLE IF NOT EXISTS detail (id INT, weekday INT,time TEXT, building TEXT, room TEXT ,primary key(id,weekday,time,building,room))");
+				tx.executeSql('SELECT * FROM lesson', [], function (tx, result) {
+					if (result.rows.length == 0) {
+						$('#update-classroom-btn').click();
+					} else {
+						fill_building();
+					}
+				}, null);
+			});
+			$('#update-classroom-btn').click(function () {
+			$.mobile.showPageLoadingMsg();
+			update_lesson();
+		});
+		$('#searchroom').click(function () {
+			var building = $('#chooseroom option:selected').val();
+			var weekday = $('#chooseweekday option:selected').val();
+			$.mobile.showPageLoadingMsg();
+			createroomtable(building, weekday);
+			$.mobile.hidePageLoadingMsg();
+			$.mobile.changePage("#result", "none", true, true);
+			
+		});
+		
+		
+		function fill_building() {
+			db.transaction(function (tx) {
+				tx.executeSql('SELECT distinct(building) FROM detail where building like "%区%" or building like "%国软%"',
+					[], function (tx, result) {
+					$('#chooseroom').html('<option value="">请选择教学楼</option>');
+					for (var i = 0; i < result.rows.length; i++) {
+						$('#chooseroom').append('<option value="' + result.rows.item(i)['building'] + '">' + result.rows.item(i)['building'] + '</option>')
+					}
+					$('.searchpanel').fieldcontain('refresh');
+					$.mobile.hidePageLoadingMsg();
+				}, null);
+			});
+		}
+		function update_lesson() {
+			html5sql.openDatabase("freexker", "freexk_login", 5000000);
+			$.get('db/lesson.sql', function (sql) {
+				html5sql.process(sql,
+					function () {
+					fill_building();
+				},
+					function (error) {
+					alert(error);
+					$.mobile.hidePageLoadingMsg();
+				});
+			});
+		}
+
+		function n2c(s) {
+			var chinese = ['', '一', '二', '三', '四', '五', '六', '日'];
+			　　 s = "" + s;
+			　　 slen = s.length;
+			　　 var result = "";
+			　　 for (var i = 0; i < slen; i++)
+				　　 {
+					　　 result += chinese[s.charAt(i)];
+				}
+			　　 return result;
+		}
+		function createroomtable(building, weekday) {
+			$('.roomtable').html('');
+			$('.roomtable').append('<table class="ui-bar-e" border="1px" cellspacing="0px" style="border-collapse:collapse"><tr align="center" class="TR_TITLE"><td width="50" height="29">教室</td><td width="100">时段</td><td width="250">课程名称</td><td width="100">周次</td></tr></table>');
+			db.transaction(function (tx) {
+				var ids = new Array;
+				var times = new Array;
+				var rooms = new Array;
+				tx.executeSql('SELECT * FROM detail WHERE building="' + building + '" AND  weekday=' + weekday + ' order by room',
+					[], function (tx, result) {
+					for (var i = 0; i < result.rows.length; i++) {
+						ids[result.rows.length - i - 1] = result.rows.item(i)['id'];
+						times[result.rows.length - i - 1] = result.rows.item(i)['time'];
+						rooms[result.rows.length - i - 1] = result.rows.item(i)['room'];
+						tx.executeSql('SELECT * FROM lesson WHERE id=' + result.rows.item(i)['id'], [], function (tx,
+								result1) {
+							i--;
+							$('.roomtable table').append('<tr align="center" class="TR_BODY"><td>' + (rooms[i] == '' ? '未知' : rooms[i]) + '</td><td>' + times[i].split(',')[2] + '</td><td>' + result1.rows.item(0)['name'] + '</td><td>' + (times[i].split(',')[0] + ',' + times[i].split(',')[1]).replace(/周,每/g, '/').replace(/周/g, '') + '</td></tr>');
+						}, null);
+					}
+				}, null);
+			});
+		}
+		}, false);
+		</script>
+    </body>
+</html>
+<tbody>
+

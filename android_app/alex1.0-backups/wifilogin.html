@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>My Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="css/jquery.mobile-1.3.0.css">
+    <script src="js/jquery-1.8.2.js"> </script>
+    <script src="js/jquery.mobile-1.3.0.js"></script>
+</head>
+<body>
+<div data-role="page" data-theme="c">
+    <div data-role="header" data-theme="c"  data-position="fixed">
+        <h1>武大Wi-Fi登录</h1>
+    </div>
+    <div data-role="content" data-theme="c">
+        <div data-role="fieldcontain">
+            <fieldset data-role="fieldcontain">
+                <label for="stu_id" > 学号:</label>
+                <input id="stu_id" type="text" value=""/>
+            </fieldset>
+        </div>
+        <div data-role="fieldcontain">
+            <fieldset data-role="fieldcontain">
+                <label for="stu_pw"> 密码:</label>
+                <input id="stu_pw" type="password"  value=""/>
+            </fieldset>
+        </div>
+		<div data-role="fieldcontain">
+            <fieldset data-role="fieldcontain">
+                <label for="stu_cc"> 验证码:</label>
+                <input id="stu_cc" type="text" value="" />
+				<a href="#" style="float:right;font-size:0.9em;">点击查看验证码</a>
+            </fieldset>
+        </div>
+        <a data-role="button" data-transition="fade" id="login" data-theme="c">登录</a>
+    </div>
+</div>
+<script>
+    //document.addEventListener("deviceready", onDeviceReady, false);
+    $(document).ready(onDeviceReady);
+    function onDeviceReady() {
+        //if (localStorage.classInfo != '' && localStorage != null)
+         //  window.location.href='today.html';
+        if(localStorage.userid != null)
+            $('#stu_id').val(localStorage.userid);
+        if(localStorage.userpw != null)
+            $('#stu_pw').val(localStorage.userpw);
+
+        $('#login').click(login);
+        function login(){
+            $.mobile.showPageLoadingMsg();
+            $.ajax({
+                url:'http://my.whu.edu.cn/userPasswordValidate.portal?Login.Token1='+$('#stu_id').val()+'&Login.Token2='+$('#stu_pw').val(),
+                type:'GET',
+                success:function(e){
+                    if(e.indexOf('LoginSuccessed')!=-1){
+                        $.ajax({
+                            url:'http://jw.whu.edu.cn/IDStarLogin',
+                            type:'GET',
+                            success:function(){
+                                localStorage.userid = $('#stu_id').val();
+                                localStorage.userpw = $('#stu_pw').val();
+                                //$.mobile.loadPage("today.html"):
+                                $.mobile.hidePageLoadingMsg();
+                                window.location.href='today.html';
+                            }
+                        });
+                    }
+                    else{
+                        $.mobile.hidePageLoadingMsg();
+                        alert('密码错误！');
+
+                    }
+                }
+            });
+        }
+    }
+</script>
+</body>
+</html>

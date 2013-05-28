@@ -1,0 +1,187 @@
+﻿<html>
+<head>
+    <title>My Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="css/jquery.mobile-1.3.0.css">
+    <script src="js/jquery-1.8.2.js"> </script>
+    <script src="js/jquery.mobile-1.3.0.js"></script>
+</head>
+<body>
+<div data-role="page" data-theme="c">
+    <div data-role="header" data-theme="c"  data-position="fixed">
+        <a href="index.html"  class="ui-btn-left">切换帐号</a>
+        <a class="ui-btn-right" id="update-class-btn" onclick="clickUpdate()">全部续借</a>
+        <h1>图书馆借书情况</h1>
+    </div>
+
+    <div data-role="content" data-theme="c">
+        <ul data-role="listview"  data-divider-theme="d"  id="class-list" >
+            <li data-role="list-divider" role="heading" class="ui-li ui-li-divider ui-bar-b">
+			<h2>当前借阅数：	4</h2>
+			</li>
+            <li>用户界面设计 :有效的人机交互策略</li>
+            <li>数据库系统 :面向应用的方法</li>
+            <li>面向对象分析与设计 :UML 2.0版</li>
+			<li>Unix系统简明教程</li>
+        </ul>
+    </div>
+	
+    <div data-role="footer" data-position="fixed" data-theme="c">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#" data-icon="custom" class="ui-btn-active">今日课表</a></li>
+                <li><a href="#" data-icon="custom">总课表</a></li>
+                <li><a href="#" data-icon="custom">成绩</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    var weekDayChinese;
+    var myDate, day, nowClassInfo, beginTime, endTime;
+    var n;
+	$(document).ready(onDeviceReady);
+	function onDeviceReady() {
+       // alert("today");
+        myDate = new Date();
+        day = myDate.getDay();
+        nowClassInfo = localStorage.classInfo;
+        getWeekDay();
+        initTime();
+        if (nowClassInfo == null || nowClassInfo == '') {
+            clickUpdate();
+        }
+        else {
+            printTodayClassInfo(nowClassInfo, day);
+            //$('#class-list').html(nowClassInfo);
+        }
+       // $('#update-class-btn').click(clickUpdate());
+	}
+    function clickUpdate() {
+        $.mobile.showPageLoadingMsg();
+        updateClassInfo();
+    }
+    function printTheDay(nowClassInfo, day) {
+        var res = "<li data-role=\"list-divider\" role=\"heading\" class=\"ui-li ui-li-divider ui-bar-c\"><h2  class=\"ui-li-heading ui-title\">" + weekDayChinese[day] + "</h2></li>";
+        for (var i = 0; i < nowClassInfo.length; i++) {
+            if (nowClassInfo[i].weekDay == day) {
+                res += "<li class=\"ui-li ui-li-static ui-btn-up-c\"> <p>" + nowClassInfo[i].name + "</p>";
+                res += "<p>" + nowClassInfo[i].beginTime + "-" + nowClassInfo[i].endTime;
+                res += "(" + beginTime[nowClassInfo[i].beginTime - 1] + "-" + endTime[nowClassInfo[i].endTime - 1] +  ")</p>"
+                if (nowClassInfo[i].place == "undefined,undefined")
+                    res += "<p>" + "未知" +  "</p>";
+                else
+                    res += "<p>" + nowClassInfo[i].place +  "</p>";
+                res += "<p>" + nowClassInfo[i].bigTime +  "</p>";
+                //res += "<p>" + nowClassInfo[i].weekDay +  "</p>";
+               // res += "<hr>"
+            }
+        }
+        return res;
+    }
+    function printTodayClassInfo(nowClassInfo, day) { //output today's lesson
+        var res = "";
+        for (var i = 0; i < 7; i++) {
+            res += printTheDay(nowClassInfo, (day + i) % 7);
+        }
+        $('#class-list').html(res);
+    }
+    function updateClassInfo() { //post url
+        htmlobj = $.ajax({
+            url:'myclass.html',
+            type:'GET',
+            async:'false',
+            success: function(e){
+                $('#class-list').html('');
+                var nowClassInfo;
+                nowClassInfo = getClassInfo(e);
+                printTodayClassInfo(nowClassInfo, day);
+                localStorage.classInfo = nowClassInfo;
+                $.mobile.hidePageLoadingMsg();
+            }
+        });
+    }
+// nameReg = new RegExp("<td width=\"52\">.*?(?=</td>)","g");
+    function getMyGarExp(htmlStr, reg) { // deal regular expression(正则表达式);
+        var RegInfo = new RegExp(reg,"g");
+        return htmlStr.match(RegInfo);
+    }
+    function getTime(more, n) { //deal time information
+        var tmp = new Array();
+        var now = 0;
+        for (var i = 0; i < n; i++) {
+            tmp[i] = new Array();
+
+            for (var j = 1; j <= 7; j++) {
+                more[now] = more[now].substr(16);
+                if (more[now] != "") {
+                    var len = tmp[i].length;
+                    tmp[i][len] = new Object();
+                    more[now] = more[now].replace(";",",");
+                    var s = more[now].split(",");
+                    tmp[i][len].weekDay = j % 7;
+                    tmp[i][len].bigTime = s[0] + "," + s[1];
+                    tmp[i][len].beginTime = s[2].match(/\d+/g)[0];
+                    tmp[i][len].endTime = s[2].match(/\d+/g)[1];
+                    tmp[i][len].place = s[3] + "," + s[4];
+                }
+                now++;
+            }
+        }
+        return tmp;
+    }
+
+    function sortClass(a, b) {  //sort compare function
+        return a.beginTime - b.beginTime;
+    }
+
+    function getClassInfo(htmlStr) {  //deal htmlcode and get information;
+        htmlStr = htmlStr.replace(/\&nbsp;/g, "");
+        htmlStr = htmlStr.replace(/\n/g, "");
+        var nowClassInfo = new Array();
+        var name = getMyGarExp(htmlStr, "<td width=\"80\">.*?(?=</td>)");
+        var teacher = getMyGarExp(htmlStr, "<td width=\"52\">.*?(?=</td>)");
+        var more = getMyGarExp(htmlStr, "<td width=\"113\">.*?(?=</td>)");
+        var time = getTime(more, teacher.length);
+        var n = 0;
+        for (var i = 0; i < teacher.length; i++) {
+            teacher[i] = teacher[i].substr(15);
+            var ni = Math.floor(i * 2);
+            name[ni] = name[ni].substr(15);
+            for (var j = 0; j < time[i].length; j++) {
+                nowClassInfo[n++] = new classInfo(name[ni], teacher[i], time[i][j].beginTime, time[i][j].endTime, time[i][j].place, time[i][j].weekDay, time[i][j].bigTime);
+            }
+        }
+        nowClassInfo.sort(sortClass);
+        return nowClassInfo;
+    }
+
+    function classInfo(name, teacher, beginTime, endTime, place, weekDay, bigTime) { //lesson object
+        this.name = name;
+        this.teacher = teacher;
+        this.beginTime = beginTime;
+        this.endTime = endTime;
+        this.place = place;
+        this.bigTime = bigTime;
+        this.weekDay = weekDay;
+    }
+    function getWeekDay() { //initial chinese
+        weekDayChinese = new Array();
+        weekDayChinese[0] = "周日";
+        weekDayChinese[1] = "周一";
+        weekDayChinese[2] = "周二";
+        weekDayChinese[3] = "周三";
+        weekDayChinese[4] = "周四";
+        weekDayChinese[5] = "周五";
+        weekDayChinese[6] = "周六";
+    }
+    function initTime() { //initial times
+        beginTime = new Array( "8:00", "8:50", "9:50", "10:40","11:30", "13:15", "14:05",
+                                 "14:55", "15:45", "16:40", "17:30", "19:00", "19:50", "20:40");
+        endTime = new Array("8:45", "9:35", "10:35", "11:25", "12:15", "14:00", "14:50",
+                               "15:40", "16:30", "17:25", "18:15", "19:45", "20:35", "21:25")
+    }
+</script>
+</body>
+</html>

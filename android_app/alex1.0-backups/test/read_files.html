@@ -1,0 +1,49 @@
+﻿<html>
+<head>
+<title>JS创建文件，读取文件</title>
+
+<script type="text/javascript">
+    onerror=handleErr;
+    var txt="";
+    function handleErr(msg,url,l) {
+        txt="本页中存在错误。\n\n";
+            txt+="错误：" + msg + "\n";
+            txt+="URL: " + url + "\n";
+            txt+="行：" + l + "\n\n";
+            txt+="点击“确定”继续。\n\n";
+            alert(txt);
+            return true;
+    }
+function myread() { 
+    alert("test");
+    var fso, f1, ts, s; 
+    var ForReading=1; 
+
+    fso=new ActiveXObject("Scripting.FileSystemObject"); 
+    f1=fso.CreateTextFile("testfile.txt1",true); 
+    f1.WriteLine("Hello World!"); 
+    f1.WriteBlankLines(1); 
+    f1.Close(); 
+    ts=fso.OpenTextFile("testfile.txt1",ForReading); 
+    s=ts.ReadLine(); 
+    document.write("File contents=''"+s+"''"); 
+    ts.Close(); 
+    f2=fso.CreateTextFile("testfile.txt2",true); 
+    f2.WriteLine("File contents=''"+s+"''"); 
+    f2.WriteBlankLines(1); 
+    f2.Close(); 
+}
+</script>
+</head>
+
+<body>
+<h1>JS创建文件，读取文件</h1>
+
+<div>  
+    地址：<input type="text" id="url">
+    <input type="button" onclick="myread()" value="move">
+</div>
+
+</body>
+</html>
+

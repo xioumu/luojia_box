@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>我的课表</title>
+        <link rel="stylesheet" href="css/jquery.mobile-1.1.0.min.css" />
+        <link rel="stylesheet" href="css/style.css" />
+		<script src="js/cordova-1.7.0rc1.js"></script>
+        <script src="js/jquery-1.7.2.min.js"></script>
+        <script src="js/jquery.mobile-1.1.0.min.js"></script>
+		<script src="js/db.js"></script>
+    </head>
+    <body>
+        <div data-role="page" id="main">
+			<div data-role="header" class="ui-header ui-bar-a" data-position="fixed"> 
+				<h1>我的成绩</h1> 
+				<a href="index.html"  class="ui-btn-left" rel=external>切换帐号</a>
+				<a class="ui-btn-right" id="update-score-btn">更新成绩</a>
+			</div>
+			<div data-role="content" id="content">
+			<div class="score-container">
+				<ul class="score-table" data-role="listview"></ul>
+			</div>
+			<div class="display-none"></div>
+			</div>
+			<div data-role="footer" data-position="fixed"  class="nav-glyphish" id="footer">
+				<div data-role="navbar"  class="nav-glyphish" data-grid="d">
+				<ul>
+					<li><a href="table.html" id="table" data-icon="custom" rel=external>课表</a></li>
+					<li><a class="ui-btn-active" id="score" data-icon="custom">成绩</a></li>
+					<li><a href="classroom.html" id="classroom" data-icon="custom" rel=external>教室</a></li>
+					<li><a href="choose.html" id="choose" data-icon="custom" rel=external>选课</a></li>
+					<li><a href="evaluate.html" id="evaluate" data-icon="custom" rel=external>评教</a></li>
+				</ul>
+				</div>
+			</div>
+        </div>
+		<script>
+		
+		document.addEventListener("deviceready", function(){
+			if (localStorage.getItem('score') == null) {
+				localStorage.setItem('score','');
+				$('#update-score-btn').click();
+			}else{
+				if(localStorage.getItem('score')==''){
+					$('#update-score-btn').click();
+				}else{
+					$('.score-table').html(localStorage.getItem('score'));
+				}
+			}
+			$('#update-score-btn').click(function(){
+			$.mobile.showPageLoadingMsg();
+			$('.score-table').html('');
+			update_score();
+		});
+		}, false);
+		
+		function update_score(){
+			$.ajax({
+				url : 'http://jw.whu.edu.cn/stu/query_score.jsp',
+				type : 'GET',
+				success : function (e) {
+					$.mobile.hidePageLoadingMsg();
+					$('.display-none').html(e.split('class="TB_LINE">')[1].split('</table>')[0]);
+					var a=gpa();
+					var b=get_item();
+					for (var i=0;i<b.length;i++){
+					$('.score-table').prepend('<li>'+b[i].name+'<span class="ui-li-count">'+b[i].score+'</span></li>');
+					}
+					$('.score-table').prepend('<li data-role="list-divider">已修学分:'+a[0]+'  绩点:'+a[1]+'  平均成绩:'+a[2]+'</li>');
+					$('.score-table').listview('refresh');
+					localStorage.setItem('score',$('.score-table').html());
+				}
+			});
+		}
+		function get_item(){
+			var a=[];
+			for(var i=0;i<=$('.TR_BODY').length-2;i++){
+				a.push({});
+				a[i].name=$('.TR_BODY td').eq(12*i+4).html();
+				a[i].score=parseFloat($('.TR_BODY td').eq(12*i+12).html());
+				a[i].credit=parseFloat($('.TR_BODY td').eq(12*i+9).html());
+				a[i].isrebuilt=$('.TR_BODY td').eq(12*i+11).html()=='重修'?1:0;
+				a[i].type=$('.TR_BODY td').eq(12*i+10).html();
+				a[i].term=$('.TR_BODY td').eq(12*i+7).html()+$('.TR_BODY td').eq(12*i+8).html();
+			}
+			return a;
+		}
+		
+		function gpa() {
+			var creditcount = 0,gpacount = 0,scorecount = 0,gpa,avgpa,avscore,gpaarray,i,a=get_item();
+			for (i = 0; i <= $('.TR_BODY').length - 2; i++) {
+					var credit = a[i].credit;
+					var score = a[i].score;
+					switch (true) {
+					case score >= 90 && score <= 100:
+						gpa = 4.0;
+						break;
+					case score >= 85:
+						gpa = 3.7;
+						break;
+					case score >= 82:
+						gpa = 3.3;
+						break;
+					case score >= 78:
+						gpa = 3.0;
+						break;
+					case score >= 75:
+						gpa = 2.7;
+						break;
+					case score >= 72:
+						gpa = 2.3;
+						break;
+					case score >= 68:
+						gpa = 2.0;
+						break;
+					case score >= 64:
+						gpa = 1.5;
+						break;
+					case score >= 60:
+						gpa = 1.0;
+						break;
+					case score < 60:
+						gpa = 0;
+						break;
+					}
+					creditcount = credit + creditcount;
+					gpacount = gpa * credit + gpacount;
+					scorecount = score * credit + scorecount;
+			}
+			avgpa = (gpacount / creditcount).toPrecision(3);
+			avscore = (scorecount / creditcount).toPrecision(3);
+			gparray = new Array();
+			gparray[0] = ((creditcount != 'NaN') ? creditcount : 0);
+			gparray[1] = ((avgpa != 'NaN') ? avgpa : 0);
+			gparray[2] = ((avscore != 'NaN') ? avscore : 0);
+			return gparray;
+		}
+
+		</script>
+    </body>
+</html>
+<tbody>
+

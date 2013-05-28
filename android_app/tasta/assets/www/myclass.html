@@ -1,0 +1,989 @@
+
+<!-- saved from url=(0046)http://202.114.74.198/stu/query_stu_lesson.jsp -->
+<html version="g42dymwpi--nx"><head><meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<title>本人课表</title>
+
+<link rel="stylesheet" href="./本人课表_files/css.css" type="text/css">
+<script>
+
+function doDel(url){
+	//确认删除
+	if(window.confirm("确定要撤销这门课吗？")==true){
+		location = url;
+	}
+	return false;
+}
+
+
+</script>
+<style>@-moz-keyframes nodeInserted{from{opacity:0;}to{opacity:1;}}@-webkit-keyframes nodeInserted{from{opacity:0;}to{opacity:1;}}@-o-keyframes nodeInserted{from{opacity:0;}to{opacity:1;}}@keyframes nodeInserted{from{opacity:0;}to{opacity:1;}}embed,object{animation-duration:.001s;-ms-animation-duration:.001s;-moz-animation-duration:.001s;-webkit-animation-duration:.001s;-o-animation-duration:.001s;animation-name:nodeInserted;-ms-animation-name:nodeInserted;-moz-animation-name:nodeInserted;-webkit-animation-name:nodeInserted;-o-animation-name:nodeInserted;}</style></head>
+<body class="BD_LISTPAGE"><div id="lptopspacer55930229" style="height: 27px;"></div> 
+<br> 
+<table width="1720" border="0" align="center" cellpadding="3" cellspacing="1" class="TB_LINE"> 
+  
+  <tbody><tr class="TR_HEADER"> 
+    <td height="25" colspan="23" align="center"> 
+    <b>本人课表查询页面</b></td> 
+  </tr> 
+  
+ <tr class="TR_BODY">
+		
+		<td colspan="23" height="25">
+		 您本学期剩余的可撤销次数为：<span class="hLight">19次</span>&nbsp;&nbsp;&nbsp;&nbsp;[当前是：&lt;<font color="#ff0000">2012-2013</font>&gt;学年 &lt;<font color="#ff0000">下</font>&gt;学期]
+		</td>
+		
+</tr>
+<tr class="TR_BODY">
+	<td colspan="23" height="25"><form style="margin:0px;">
+	
+	学号:2011302580362   姓名:朱瑞玮&nbsp;&nbsp;&nbsp;&nbsp;
+		
+		
+学年<select name="year">
+	
+	<option value="2004">2004-2005</option>
+	
+	<option value="2005">2005-2006</option>
+	
+	<option value="2006">2006-2007</option>
+	
+	<option value="2007">2007-2008</option>
+	
+	<option value="2008">2008-2009</option>
+	
+	<option value="2009">2009-2010</option>
+	
+	<option value="2010">2010-2011</option>
+	
+	<option value="2011">2011-2012</option>
+	
+	<option value="2012" selected="">2012-2013</option>
+	
+	<option value="2013">2013-2014</option>
+	
+	<option value="2014">2014-2015</option>
+	
+	</select>
+学期<select name="term">
+	<option value="上">上</option>
+	<option value="下" selected="">下</option>
+</select><!-- 学年学期 --><input type="submit" name="submit" value="显 示"><button id="rearrange" type="button">生成课表</button></form>
+	
+	
+	</td>
+
+  </tr>
+  <tr class="TR_BODY">
+  			<td colspan="23" height="30"><form style="margin:0px;">
+  			<font color="#ff0000">特别警告</font>：此页面默认显示本学期的课程。 若是<font color="#800000">选的下学期的课</font>，查看选课结果时, 需要在此处选择 对应学年或者学期！此外，对于已经出成绩的课程，本页面也不显示，请去 所有成绩查询 页面查看成绩 。
+  			</form></td>
+  </tr>
+	
+	
+	
+	<tr align="center" class="TR_TITLE">
+		<td height="25" nowrap="">操作</td>
+		<td nowrap="">课头状态</td>
+		<td nowrap="">课头号</td>
+		<td nowrap="">课程名</td>
+		<td nowrap="">课程号</td>		
+		<td nowrap="">成绩类型</td>
+		<td nowrap="">   学习类型</td> 
+		  
+		  <td nowrap="">授课学院</td> 
+		<td nowrap="">   教师</td> 
+		 <td nowrap="">  计划学院</td> 
+		 <td nowrap="">  专业</td> 
+		 <td nowrap="">  学分</td> 
+		 <td nowrap="">  学时</td> 
+		   
+		<td nowrap="">周一</td>
+		<td nowrap="">周二</td>
+		<td nowrap="">周三</td>
+		<td nowrap="">周四</td>
+		<td nowrap="">周五</td>
+		<td nowrap="">周六</td>
+		<td nowrap="">周日</td>
+		<td nowrap="">备注</td>
+		<td nowrap="">学年</td> 
+		<td nowrap="">学期</td> 
+	</tr>
+	
+  <!-- 显示数据 --> 
+   
+	    
+	  
+	  <tr align="center" class="TR_BODY">
+	  	<td width="40">
+	  
+	  	
+	  	  	  	  	  
+	  	  	  
+	  	  	  			   
+			   
+			   
+               
+             	
+     
+				 
+			   <a href="javascript:doDel('../servlet/DelChoosed?lessonNum=20122021004')"><font color="#0000ff">撤销</font></a> 
+			   
+			
+	  	  	
+	  	
+	  	
+	  	</td>
+		
+		<td height="20" width="37">选课开始</td>
+		<td width="46" nowrap="">20122021004</td>
+		<td width="80">物联网应用及安全</td>
+		<td width="28">16010245</td>
+		<td width="50" nowrap="">公共选修</td>
+		<td width="28">普通</td>
+		
+		<td width="60">计算机学院</td>
+		<td width="52">张立强</td> 
+		<td width="60">计算机学院</td>
+		<td width="80">&nbsp;</td>
+		<td width="20">1.0</td>
+		<td width="20">18</td>
+		
+		<td width="113">&nbsp;</td>
+		<td width="113">1-10周,每1周;
+12-13节,3区,附3-301</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		
+		<td width="100">  跨学科领域</td>
+		
+	
+		
+		<td width="28">2012</td>
+		<td width="10">下</td>
+				
+		
+	</tr>
+   
+	    
+	  
+	  <tr align="center" class="TR_BODY">
+	  	<td width="40">
+	  
+	  	
+	  	  	  	  	  
+	  	  	  
+	  	  	  			   
+			   
+			   
+               
+             	
+     
+				 
+			   <a href="javascript:doDel('../servlet/DelChoosed?lessonNum=20122030120')"><font color="#0000ff">撤销</font></a> 
+			   
+			
+	  	  	
+	  	
+	  	
+	  	</td>
+		
+		<td height="20" width="37">选课开始</td>
+		<td width="46" nowrap="">20122030120</td>
+		<td width="80">用户界面设计与测试</td>
+		<td width="28">0800021</td>
+		<td width="50" nowrap="">专业必修</td>
+		<td width="28">普通</td>
+		
+		<td width="60">国际软件学院</td>
+		<td width="52">李晓剑</td> 
+		<td width="60">国际软件学院</td>
+		<td width="80">软件工程</td>
+		<td width="20">1.5</td>
+		<td width="20">18</td>
+		
+		<td width="113">1-9周,每1周;
+3-4节,国软,4-304</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		
+		<td width="100">&nbsp;</td>
+		
+	
+		
+		<td width="28">2012</td>
+		<td width="10">下</td>
+				
+		
+	</tr>
+   
+	    
+	  
+	  <tr align="center" class="TR_BODY">
+	  	<td width="40">
+	  
+	  	
+	  	  	  	  	  
+	  	  	  
+	  	  	  			   
+			   
+			   
+               
+             	
+     
+				 
+			   <a href="javascript:doDel('../servlet/DelChoosed?lessonNum=20122014153')"><font color="#0000ff">撤销</font></a> 
+			   
+			
+	  	  	
+	  	
+	  	
+	  	</td>
+		
+		<td height="20" width="37">选课开始</td>
+		<td width="46" nowrap="">20122014153</td>
+		<td width="80">图形图像软件应用</td>
+		<td width="28">16040140</td>
+		<td width="50" nowrap="">公共选修</td>
+		<td width="28">普通</td>
+		
+		<td width="60">资源与环境科学学院</td>
+		<td width="52">彭小元</td> 
+		<td width="60">资源与环境科学学院</td>
+		<td width="80">&nbsp;</td>
+		<td width="20">2.0</td>
+		<td width="20">36</td>
+		
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">1-10周,每1周;
+12-14节,3区,1-303</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		
+		<td width="100">  数学与自然科学领域</td>
+		
+	
+		
+		<td width="28">2012</td>
+		<td width="10">下</td>
+				
+		
+	</tr>
+   
+	    
+	  
+	  <tr align="center" class="TR_BODY">
+	  	<td width="40">
+	  
+	  	
+	  	  	  	  	  
+	  	  	  
+	  	  	  			   
+			   
+			   
+               
+             	
+     
+				 
+			   <a href="javascript:doDel('../servlet/DelChoosed?lessonNum=20122055142')"><font color="#0000ff">撤销</font></a> 
+			   
+			
+	  	  	
+	  	
+	  	
+	  	</td>
+		
+		<td height="20" width="37">选课开始</td>
+		<td width="46" nowrap="">20122055142</td>
+		<td width="80">大学英语4</td>
+		<td width="28">0500004</td>
+		<td width="50" nowrap="">公共必修</td>
+		<td width="28">普通</td>
+		
+		<td width="60">大学英语部</td>
+		<td width="52">祝捷</td> 
+		<td width="60">国际软件学院</td>
+		<td width="80">软件工程</td>
+		<td width="20">3.0</td>
+		<td width="20">54</td>
+		
+		<td width="113">&nbsp;</td>
+		<td width="113">1-17周,每2周;
+1-2节,国软,4-401</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">1-17周,每1周;
+3-4节,国软,4-401</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		
+		<td width="100">&nbsp;</td>
+		
+	
+		
+		<td width="28">2012</td>
+		<td width="10">下</td>
+				
+		
+	</tr>
+   
+	    
+	  
+	  <tr align="center" class="TR_BODY">
+	  	<td width="40">
+	  
+	  	
+	  	  	  	  	  
+	  	  	  
+	  	  	  			   
+			   
+			   
+               
+             	
+     
+				 
+			   <a href="javascript:doDel('../servlet/DelChoosed?lessonNum=20122030072')"><font color="#0000ff">撤销</font></a> 
+			   
+			
+	  	  	
+	  	
+	  	
+	  	</td>
+		
+		<td height="20" width="37">选课开始</td>
+		<td width="46" nowrap="">20122030072</td>
+		<td width="80">WEB应用与开发</td>
+		<td width="28">0801700</td>
+		<td width="50" nowrap="">专业选修</td>
+		<td width="28">普通</td>
+		
+		<td width="60">国际软件学院</td>
+		<td width="52">韩波</td> 
+		<td width="60">国际软件学院</td>
+		<td width="80">软件工程国际班</td>
+		<td width="20">1.5</td>
+		<td width="20">18</td>
+		
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">1-9周,每1周;
+9-10节,国软,4-403</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		
+		<td width="100">&nbsp;</td>
+		
+	
+		
+		<td width="28">2012</td>
+		<td width="10">下</td>
+				
+		
+	</tr>
+   
+	    
+	  
+	  <tr align="center" class="TR_BODY">
+	  	<td width="40">
+	  
+	  	
+	  	  	  	  	  
+	  	  	  
+	  	  	  			   
+			   
+			   
+               
+             	
+     
+				 
+			   <a href="javascript:doDel('../servlet/DelChoosed?lessonNum=20122030117')"><font color="#0000ff">撤销</font></a> 
+			   
+			
+	  	  	
+	  	
+	  	
+	  	</td>
+		
+		<td height="20" width="37">选课开始</td>
+		<td width="46" nowrap="">20122030117</td>
+		<td width="80">UNIX程序设计</td>
+		<td width="28">0800017</td>
+		<td width="50" nowrap="">专业选修</td>
+		<td width="28">普通</td>
+		
+		<td width="60">国际软件学院</td>
+		<td width="52">陈钰清</td> 
+		<td width="60">国际软件学院</td>
+		<td width="80">软件工程</td>
+		<td width="20">2.0</td>
+		<td width="20">24</td>
+		
+		<td width="113">1-12周,每1周;
+12-14节,国软,4-203</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		
+		<td width="100">&nbsp;</td>
+		
+	
+		
+		<td width="28">2012</td>
+		<td width="10">下</td>
+				
+		
+	</tr>
+   
+	    
+	  
+	  <tr align="center" class="TR_BODY">
+	  	<td width="40">
+	  
+	  	
+	  	  	  	  	  
+	  	  	  
+	  	  	  			   
+			   
+			   
+               
+             	
+     
+				 
+			   <a href="javascript:doDel('../servlet/DelChoosed?lessonNum=20122030123')"><font color="#0000ff">撤销</font></a> 
+			   
+			
+	  	  	
+	  	
+	  	
+	  	</td>
+		
+		<td height="20" width="37">选课开始</td>
+		<td width="46" nowrap="">20122030123</td>
+		<td width="80">编译技术及应用</td>
+		<td width="28">0800022</td>
+		<td width="50" nowrap="">专业必修</td>
+		<td width="28">普通</td>
+		
+		<td width="60">国际软件学院</td>
+		<td width="52">桂浩</td> 
+		<td width="60">国际软件学院</td>
+		<td width="80">软件工程</td>
+		<td width="20">3.0</td>
+		<td width="20">54</td>
+		
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">1-17周,每1周;
+3-5节,国软,4-304</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		
+		<td width="100">&nbsp;</td>
+		
+	
+		
+		<td width="28">2012</td>
+		<td width="10">下</td>
+				
+		
+	</tr>
+   
+	    
+	  
+	  <tr align="center" class="TR_BODY">
+	  	<td width="40">
+	  
+	  	
+	  	  	  	  	  
+	  	  	  
+	  	  	  			   
+			   
+			   
+               
+             	
+     
+				 
+			   <a href="javascript:doDel('../servlet/DelChoosed?lessonNum=20122030125')"><font color="#0000ff">撤销</font></a> 
+			   
+			
+	  	  	
+	  	
+	  	
+	  	</td>
+		
+		<td height="20" width="37">选课开始</td>
+		<td width="46" nowrap="">20122030125</td>
+		<td width="80">数据库系统</td>
+		<td width="28">0800025</td>
+		<td width="50" nowrap="">专业必修</td>
+		<td width="28">普通</td>
+		
+		<td width="60">国际软件学院</td>
+		<td width="52">董红斌</td> 
+		<td width="60">国际软件学院</td>
+		<td width="80">软件工程</td>
+		<td width="20">3.0</td>
+		<td width="20">54</td>
+		
+		<td width="113">1-9周,每1周;
+7-9节,国软,4-204</td>
+		<td width="113">1-9周,每1周;
+7-9节,国软,4-204</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		
+		<td width="100">&nbsp;</td>
+		
+	
+		
+		<td width="28">2012</td>
+		<td width="10">下</td>
+				
+		
+	</tr>
+   
+	    
+	  
+	  <tr align="center" class="TR_BODY">
+	  	<td width="40">
+	  
+	  	
+	  	  	  	  	  
+	  	  	  
+	  	  	  			   
+			   
+			   
+               
+             	
+     
+				 
+			   <a href="javascript:doDel('../servlet/DelChoosed?lessonNum=20122030129')"><font color="#0000ff">撤销</font></a> 
+			   
+			
+	  	  	
+	  	
+	  	
+	  	</td>
+		
+		<td height="20" width="37">选课开始</td>
+		<td width="46" nowrap="">20122030129</td>
+		<td width="80">操作系统原理</td>
+		<td width="28">0800501</td>
+		<td width="50" nowrap="">专业必修</td>
+		<td width="28">普通</td>
+		
+		<td width="60">国际软件学院</td>
+		<td width="52">桂浩</td> 
+		<td width="60">国际软件学院</td>
+		<td width="80">软件工程</td>
+		<td width="20">3.0</td>
+		<td width="20">42</td>
+		
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">1-14周,每1周;
+3-5节,国软,4-403</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		
+		<td width="100">&nbsp;</td>
+		
+	
+		
+		<td width="28">2012</td>
+		<td width="10">下</td>
+				
+		
+	</tr>
+   
+	    
+	  
+	  <tr align="center" class="TR_BODY">
+	  	<td width="40">
+	  
+	  	
+	  	  	  	  	  
+	  	  	  
+	  	  	  			   
+			   
+			   
+               
+             	
+     
+				 
+			   <a href="javascript:doDel('../servlet/DelChoosed?lessonNum=20122030132')"><font color="#0000ff">撤销</font></a> 
+			   
+			
+	  	  	
+	  	
+	  	
+	  	</td>
+		
+		<td height="20" width="37">选课开始</td>
+		<td width="46" nowrap="">20122030132</td>
+		<td width="80">UML及软件建模</td>
+		<td width="28">0800557</td>
+		<td width="50" nowrap="">专业选修</td>
+		<td width="28">普通</td>
+		
+		<td width="60">国际软件学院</td>
+		<td width="52">韩波</td> 
+		<td width="60">国际软件学院</td>
+		<td width="80">软件工程</td>
+		<td width="20">1.5</td>
+		<td width="20">18</td>
+		
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">1-9周,每1周;
+7-8节,国软,4-403</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		
+		<td width="100">&nbsp;</td>
+		
+	
+		
+		<td width="28">2012</td>
+		<td width="10">下</td>
+				
+		
+	</tr>
+   
+	    
+	  
+	  <tr align="center" class="TR_BODY">
+	  	<td width="40">
+	  
+	  	
+	  	  	  	  	  
+	  	  	  
+	  	  	  			   
+			   
+			   
+               
+             	
+     
+				 
+			   <a href="javascript:doDel('../servlet/DelChoosed?lessonNum=20122030151')"><font color="#0000ff">撤销</font></a> 
+			   
+			
+	  	  	
+	  	
+	  	
+	  	</td>
+		
+		<td height="20" width="37">选课开始</td>
+		<td width="46" nowrap="">20122030151</td>
+		<td width="80">数据库课程设计</td>
+		<td width="28">1300163</td>
+		<td width="50" nowrap="">专业必修</td>
+		<td width="28">普通</td>
+		
+		<td width="60">国际软件学院</td>
+		<td width="52">董红斌</td> 
+		<td width="60">国际软件学院</td>
+		<td width="80">软件工程</td>
+		<td width="20">2.0</td>
+		<td width="20">0</td>
+		
+		<td width="113">10-17周,每1周;
+7-9节</td>
+		<td width="113">10-17周,每1周;
+7-9节</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">10-17周,每1周;
+7-9节</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		<td width="113">&nbsp;</td>
+		
+		<td width="100">&nbsp;</td>
+		
+	
+		
+		<td width="28">2012</td>
+		<td width="10">下</td>
+				
+		
+	</tr>
+   
+  <tr class="TR_TITLE">
+	<td colspan="23" height="25">共有11条记录 <script laguage="javascript">
+function printPage() { print(document); }
+ window.onbeforeprint=function(){
+	btn = document.getElementsByName("printBtn");
+	for(i = 0; i < btn.length; i++){
+		btn(i).style.visibility = "hidden";
+	}
+}
+ window.onafterprint=function(){
+	btn = document.getElementsByName("printBtn");
+	for(i = 0; i < btn.length; i++){
+		btn(i).style.visibility = "";
+	}
+}
+</script><input name="printBtn" id="printBtn" type="button" value="打印本页" onclick="printPage()"></td>
+  </tr>
+</tbody></table> 
+
+
+注：  只有 课头状态为“<font color="#ff0000">选课开始</font>”的课 才能撤销, 否则请联系 任课教师 或者 授课学院教学秘书。<br>
+<font size="3"><b>警告</b></font> ：1.对于同一课程号的课程，在选课时只需选一门即可,若课表中出现了多门 请立刻撤销相关课头！即同一课程号的 课头 只能选一个！<br>
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.所有选课成功的课程，都会出现在“本人课表”中；若是由于某种原因不能去上某门课程，请立刻撤销，否则可能会被记作零分。
+   <br>
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.注意核对 自己课表中 各课头的 学习类型 和 其它各项属性，看是否有误：若有，请联系 授课学院教学秘书 修改。<br>
+	   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名词解释：“学习类型” ： 整体分两大 类： 正常学习的课程 和 修习双学位 的课程。 正常学习的课程 依次分“普通”、“重修”、“第二次重修”; 本校学生双学位的课程 只有“辅修”（双学位的不及格课程 再修 也记作 “辅修”类型）。
+
+
+
+<table width="1700" border="0" align="center" cellspacing="0" cellpadding="0"> 
+    <tbody> 
+      <tr> 
+        <td width="1700" height="20">提示: 根据学生的 该门课的 学习类型 用不同颜色表示</td> 
+      </tr>
+      
+      <!--
+      <TR> 
+        <TD width="1700" height="20">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#800000">红色</font>表示学习类型为“重修”； <font color="#008000">绿色</font>表示学习类型为“辅修”</TD> 
+      </TR> 
+      whulxl 2010年9月8日 注释掉此行，添加下面一行
+      -->
+      
+     
+      <tr> 
+        <td width="1700" height="20">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#FFFF00">黄色</font>：若该行数据 以黄色显示，表示该门课程学习类型为“重修”； <font color="#008000">绿色</font>：若该行数据 以绿色显示，表示该门课程学习类型为“辅修”</td> 
+      </tr> 
+   
+     
+    
+    </tbody> 
+</table> 
+
+
+<script style="display: none;" id="hiddenlpsubmitdiv"></script><script>try{for(var lastpass_iter=0; lastpass_iter < document.forms.length; lastpass_iter++){ var lastpass_f = document.forms[lastpass_iter]; if(typeof(lastpass_f.lpsubmitorig2)=="undefined"){ lastpass_f.lpsubmitorig2 = lastpass_f.submit; lastpass_f.submit = function(){ var form=this; var customEvent = document.createEvent("Event"); customEvent.initEvent("lpCustomEvent", true, true); var d = document.getElementById("hiddenlpsubmitdiv"); for(var i = 0; i < document.forms.length; i++){ if(document.forms[i]==form){ d.innerText=i; } } d.dispatchEvent(customEvent); form.lpsubmitorig2(); } } }}catch(e){}</script><script>try{function lpshowmenudiv(id){   closelpmenus(id);   var div = document.getElementById('lppopup'+id);   var btn = document.getElementById('lp'+id);   if(btn && div){     var btnstyle = window.getComputedStyle(btn, null);     var divstyle = window.getComputedStyle(div, null);     var posx = btn.offsetLeft;     posx -= 80;     var divwidth = parseInt(divstyle.getPropertyValue('width'));     if(posx + divwidth > window.innerWidth - 25){       posx -= ((posx + divwidth) - window.innerWidth + 25);     }     div.style.left = posx + "px";     div.style.top = (btn.offsetTop + parseInt(btnstyle.getPropertyValue('height'))) + "px";         if(div.style.display=='block'){div.style.display = 'none'; if(typeof(slideup)=='function'){slideup();} }    else div.style.display = 'block';       } }function closelpmenus(id){   if(typeof(lpgblmenus)!='undefined'){     for(var i=0; i < lpgblmenus.length; i++){       if((id==null || lpgblmenus[i]!='lppopup'+id) && document.getElementById(lpgblmenus[i]))         document.getElementById(lpgblmenus[i]).style.display = 'none';     }   }} var lpcustomEvent = document.createEvent('Event'); lpcustomEvent.initEvent('lpCustomEventMenu', true, true); }catch(e){}</script><script>try{if(typeof(lpgblmenus)=='undefined'){ lpgblmenus = new Array(); }   lpgblmenus[lpgblmenus.length] = 'lppopupnever';   }catch(e){}</script><script>try{document.addEventListener('mouseup', function(e){ if(typeof(closelpmenus)=='function'){closelpmenus();}}, false)}catch(e){}</script><div id="lpiframeoverlay55930229" style="top: 0px; left: 0px; height: 1px; width: 2732px; position: absolute; background-color: black; z-index: 1000000099;"><iframe id="lpiframe55930229" src="./本人课表_files/overlay.htm" style="height: 27px; width: 2732px; border: 0px;" scrolling="no"></iframe></div><script>(function main() {
+        var CONSTANTS = {
+            PLAYER_DOM: 'object[data],embed[src],iframe[src]',
+            PLAYERS: [
+                {
+                    find: /http:\/\/static\.youku\.com\/.*q?(player|loader)(_taobao)?\.swf/,
+                    replace: 'http://player.opengg.me/loader.swf'
+                },
+                {
+                    find: /http:\/\/js\.tudouui\.com\/.*\/TudouVideoPlayer_Homer_.*.swf/,
+                    replace: 'http://player.opengg.me/TudouVideoPlayer_Homer_237.swf'
+                },
+                {
+                    find: /http:\/\/player\.youku\.com\/player\.php\//,
+                    replace: 'http://player.opengg.me/player.php/'
+                },
+                {
+                    find: /http:\/\/www.tudou.com\/(([a-z]|programs)\/.*)/,
+                    replace: 'http://player.opengg.me/td.php/$1'
+                }
+            ],
+            SHARE_DOM: '#panel_share input,input#copyInput.txt',
+            SHARES: [
+                {
+                    find: /http:\/\/player\.youku\.com\/player\.php\//,
+                    replace: 'http://player.opengg.me/player.php/'
+                },
+                {
+                    find: /http:\/\/www.tudou.com\/(.*v\.swf)/,
+                    replace: 'http://player.opengg.me/td.php/$1'
+                }
+            ],
+            NODEINSERTED_HACK: '@-moz-keyframes nodeInserted{from{opacity:0;}to{opacity:1;}}@-webkit-keyframes nodeInserted{from{opacity:0;}to{opacity:1;}}@-o-keyframes nodeInserted{from{opacity:0;}to{opacity:1;}}@keyframes nodeInserted{from{opacity:0;}to{opacity:1;}}embed,object{animation-duration:.001s;-ms-animation-duration:.001s;-moz-animation-duration:.001s;-webkit-animation-duration:.001s;-o-animation-duration:.001s;animation-name:nodeInserted;-ms-animation-name:nodeInserted;-moz-animation-name:nodeInserted;-webkit-animation-name:nodeInserted;-o-animation-name:nodeInserted;}',
+            TOGGLE_BTN: '#toggleGoogle'
+        };
+        var DONE = [];
+        var UTIL = {
+            addCss: function (str) {
+                var style = document.createElement('style');
+                style.textContent = str;
+                document.head.appendChild(style);
+            },
+            reloadFlash: function (elem) {
+                var nextSibling = elem.nextSibling;
+                var parentNode = elem.parentNode;
+                parentNode.removeChild(elem);
+                if (nextSibling) {
+                    parentNode.insertBefore(elem, nextSibling);
+                } else {
+                    parentNode.appendChild(elem);
+                }
+            },
+            initFlash: function (elem) {
+                // console.log(elem);
+                if (DONE.indexOf(elem) !== -1) {
+                    return;
+                }
+                if (this.rewriteFlash(elem)) {
+                    this.reloadFlash(elem);
+                    DONE.push(elem);
+                }
+            },
+            rewriteFlash: function (elem) {
+                var atrs = ['data', 'src'];
+                var players = CONSTANTS.PLAYERS;
+                var needReload = false;
+                UTIL.forEach(atrs, function (atr) {
+                    UTIL.forEach(players, function (player) {
+                        if (elem[atr] && player.find.test(elem[atr])) {
+                            elem[atr] = elem[atr].replace(player.find, player.replace);
+                            needReload = true;
+                        }
+                    });
+                });
+                return needReload;
+            },
+            forEach: function (arr, callback) {
+                if (this.isArrayLike(arr)) {
+                    if (Array.prototype.forEach) {
+                        Array.prototype.forEach.call(arr, callback);
+                    } else {
+                        var i = 0;
+                        for (i = 0; i < arr.length; ++i) {
+                            callback.call(arr[i], arr[i]);
+                        }
+                    }
+                }
+            },
+            isArrayLike: function (obj) {
+                if (typeof obj !== 'object') {
+                    return false;
+                }
+                var types = ['Array', 'NodeList', 'HTMLCollection'];
+                var i = 0;
+                for (i = 0; i < types.length; ++i) {
+                    if (Object.prototype.toString.call(obj).indexOf(types[i]) !== -1) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        };
+        function init() {
+            function onDOMNodeInsertedHandler(e) {
+                var target = e.target;
+                if (target.nodeType === 1 && /OBJECT|EMBED|IFRAME/ig.test(target.nodeName)) {
+                    UTIL.initFlash(target);
+                }
+            }
+            function onAnimationStartHandler(e) {
+                if (e.animationName === 'nodeInserted') {
+                    var target = e.target;
+                    // console.log(target);
+                    if (target.nodeType === 1 && /OBJECT|EMBED|IFRAME/ig.test(target.nodeName)) {
+                        UTIL.initFlash(target);
+                    }
+                }
+            }
+            UTIL.addCss(CONSTANTS.NODEINSERTED_HACK);
+            /*Firefox*/
+            document.body.addEventListener('animationstart', onAnimationStartHandler, false);
+            /*/Firefox*/
+            /*Chrome*/
+            document.body.addEventListener('webkitAnimationEnd', onAnimationStartHandler, false);
+            /*/Chrome*/
+            /*Opera 12+*/
+            document.body.addEventListener('oAnimationStart', onAnimationStartHandler, false);
+            /*/Opera 12+*/
+            /*IE, but I never tested this*/
+            document.body.addEventListener('msAnimationStart', onAnimationStartHandler, false);
+            /*/IE, but I never tested this*/
+            if (/Opera/.test(navigator.userAgent) && !(/Version\/12/.test(navigator.userAgent))) {
+                /*Old fashion, slower maybe*/
+                document.body.addEventListener('DOMNodeInserted', onDOMNodeInsertedHandler, false);
+                var matches = document.body.querySelectorAll(CONSTANTS.PLAYER_DOM);
+                UTIL.forEach(matches, function (elem) {
+                    UTIL.initFlash(elem);
+                });
+            }
+        }
+        function tips() {
+            s=document.getElementById('ab_pip');
+            s.innerHTML = "";
+        }
+        function share(elem) {
+            var pairs = CONSTANTS.SHARES;
+            UTIL.forEach(pairs, function (item) {
+                elem.value = elem.value.replace(item.find, item.replace);
+            });
+        }
+        var CONTROLLER = [
+            {
+                host: '.',
+                fn: function () {
+                    init();
+                }
+            },
+            {
+                host: 'youku.com',
+                fn: function () {
+                    // UTIL.addCss(CONSTANTS.STYLE);
+                    tips();
+
+                    var matches = document.body.querySelectorAll(CONSTANTS.SHARE_DOM);
+                    UTIL.forEach(matches, share);
+
+
+                    var youkuPlayer = document.body.querySelector('.playBox');
+                    var notWide = !document.body.querySelector('.playBox_thx');
+                    if (youkuPlayer && notWide) {
+                        youkuPlayer.className += ' playBox_thx';
+                    }
+                }
+            },
+            {
+                host: 'tudou.com',
+                fn: function () {
+                    // UTIL.addCss(CONSTANTS.STYLE);
+                    //tips();
+                    var tudouPlayer = document.body.querySelector('#playerObject');
+                    var normalDom = document.querySelector('.normal');
+                    if (tudouPlayer && normalDom) {
+                        normalDom.className = normalDom.className.replace('normal','widescreen');
+                    }
+                    var g = (typeof unsafeWindow !== 'undefined') ? unsafeWindow : window;
+                    var TUI_copyToClip = g.TUI.copyToClip;
+                    g.TUI.copyToClip = function () {
+                        var matches = document.body.querySelectorAll(CONSTANTS.SHARE_DOM);
+                        UTIL.forEach(matches, share);
+                        TUI_copyToClip.apply(g.TUI, arguments);
+                    };
+                }
+            }
+        ];
+        var host = location.host;
+        function PROC(item) {
+            if (host.indexOf(item.host) !== -1) {
+                item.fn();
+                return;
+            }
+        }
+        UTIL.forEach(CONTROLLER, PROC);
+    })();</script></body><style type="text/css"></style></html>
